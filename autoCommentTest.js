@@ -1,6 +1,7 @@
 /**
  * Created by Lyn on 2017/7/13.
  */
+// 这是一个关于自动回复功能的小测试
 var http = require('http');
 var querystring = require('querystring');
 
