@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Promise animation</title>
+    <style>
+        .ball{
+            width:40px;
+            height:40px;
+            border-radius:20px;
+        }
+        .ball1{
+            background:red;
+        }
+        .ball2{
+            background:green;
+        }
+        .ball3{
+            background:blue;
+        }
+    </style>
+</head>
+<body>
+    <div class="ball ball1" style = "margin-left:0;"></div>
+    <div class="ball ball2" style = "margin-left:0;"></div>
+    <div class="ball ball3" style = "margin-left:0;"></div>
+</body>
+
+<script>
+    var ball1 = document.querySelector('.ball1');
+    var ball2 = document.querySelector('.ball2');
+    var ball3 = document.querySelector('.ball3');
+
+    function animate(ball,distance,callback){
+        setTimeout(function(){
+            //注意这里要获取它的左边距，就必须先转换成整型
+            var marginLeft = parseInt(ball.style.marginLeft,10);
+            if(marginLeft == distance) {
+                callback();
+            }
+            else{
+                if(marginLeft < distance) {
+                    marginLeft++;
+                }
+                else{
+                    marginLeft--;
+                }
+                //这里赋值的时候只能赋 px
+                ball.style.marginLeft = marginLeft + 'px';
+                animate(ball,distance,callback);
+            }
+        },13);
+    }
+
+    animate(ball1,300,function(){
+        animate(ball2,200,function(){})
+    });
+</script>
+<!--为了控制三个小球分别的步骤移动，上面的代码可以应用promise来执行，尤其是有远程API同步，数据库查询和文件读写操作的时候-->
+<!--Promise是一个对象，同时也是一种规范，针对异步操作约定了统一的接口，表示异步操作的最终结果以同步的方式写代码，执行的操作是异步的，但是又表示程序的执行顺序是同步的-->
+<!--Promise对象只有三种状态，未完成（pending），已完成（fulfilled），失败（rejected）-->
+<!--一个对象拥有then函数的时候，就被认定为一个promise-->
+<!--成功函数与失败函数必须是作为函数来调用，而且调用过程必须是异步的-->
+</html>
